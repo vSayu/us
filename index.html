@@ -1,0 +1,241 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#fbeef1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Para ti</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@300;400;500&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbeef1; --card:#f4cfd7; --card2:#f9dde3; --soft:#fde8ec;
+  --line:#e3a3b1; --ink:#c26a80; --ink2:#a9506a; --white:#fff8f9;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+html{background:#ecd7dc}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Quicksand',system-ui,sans-serif;
+  width:100%; max-width:430px; margin:0 auto; min-height:100%;
+  position:relative; overflow-x:hidden; overflow-y:auto;
+  touch-action:manipulation;
+}
+.bg-custom{position:fixed;inset:0;z-index:0;max-width:430px;margin:0 auto;overflow:hidden;background:var(--bg)}
+.bg-custom img{width:100%;height:100%;object-fit:cover;display:block}
+.screen{
+  min-height:100dvh; display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+  padding:calc(env(safe-area-inset-top) + 8px) 10px calc(env(safe-area-inset-bottom) + 8px);
+  gap:6px; position:relative; z-index:1;
+}
+/* imágenes largas entre el borde del teléfono y el cuadro de contraseña */
+.banner{
+  width:100%; flex:1 1 0; min-height:64px; max-height:130px; border-radius:16px; overflow:hidden;
+  background:var(--card2);
+}
+.banner.top{margin-top:16px}
+.banner.bottom{margin-bottom:0}
+.banner img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* bloque central: cuadro de contraseña + espacios en esquinas */
+.middle{
+  position:relative; width:100%; flex:0 0 auto;
+  padding:0; display:flex; justify-content:center;
+}
+.frame{
+  position:relative; z-index:1; width:92%; max-width:340px;
+  border:2px solid var(--line); border-radius:28px; padding:8px; background:var(--white);
+  box-shadow:0 18px 40px -22px rgba(194,106,128,.45);
+}
+.panel{
+  position:relative; background:var(--card); border-radius:20px; padding:24px 15px 18px; text-align:center;
+}
+/* espacios en las esquinas dentro del cuadro de la contraseña (sin marco) */
+.corner{
+  position:absolute; width:44px; height:44px; z-index:3; overflow:hidden; border-radius:10px;
+  background:transparent;
+}
+.corner img{width:100%;height:100%;object-fit:cover;display:block;border-radius:10px}
+.c1{top:12px;left:12px}
+.c2{top:12px;right:12px}
+.c3{bottom:12px;left:12px}
+.c4{bottom:12px;right:12px}
+.love-note{
+  flex:0 0 auto; margin-top:2px; font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:12px; color:var(--ink); opacity:.45; text-align:center;
+}
+
+.heart{
+  width:56px;height:56px;margin:0 auto 10px;border-radius:50%;
+  background:var(--soft);border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--ink);
+}
+h1{
+  font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;
+  font-size:34px;line-height:1.05;color:var(--ink2);letter-spacing:.5px;
+}
+h1 em{font-style:italic;font-weight:400}
+.sub{margin:8px 0 16px;font-size:13px;color:var(--ink);opacity:.85;line-height:1.5}
+
+.dots{display:flex;justify-content:center;gap:12px;margin-bottom:16px;transition:transform .1s}
+.dot{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--ink);background:transparent;transition:all .18s}
+.dot.on{background:var(--ink);transform:scale(1.1)}
+.dots.err{animation:shake .45s}
+.dots.err .dot{border-color:#d0506b;background:#d0506b}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-10px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:280px;margin:0 auto}
+.key{
+  height:52px;border-radius:18px;border:1.5px solid var(--line);
+  background:var(--white);color:var(--ink2);
+  font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;font-weight:500;
+  cursor:pointer;transition:transform .08s,background .15s;
+}
+.key:active{transform:scale(.93);background:var(--soft)}
+.key.ghost{background:transparent;border-color:transparent;font-family:'Quicksand',sans-serif;font-size:20px;color:var(--ink)}
+.msg{min-height:18px;margin-top:12px;font-size:12.5px;color:var(--ink2);letter-spacing:.3px}
+.foot{margin-top:8px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--ink);opacity:.8}
+
+/* bienvenida */
+.screen.open{animation:out .7s forwards}
+@keyframes out{to{opacity:0;transform:scale(1.04) translateY(-8px)}}
+#welcome{
+  position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--bg);opacity:0;pointer-events:none;transition:opacity .8s .5s;text-align:center;padding:30px;
+  max-width:430px;margin:0 auto;overflow:hidden;
+}
+#welcome.show{opacity:1;pointer-events:auto}
+#welcome h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:44px;color:var(--ink2);position:relative;z-index:2}
+#welcome p{margin-top:10px;font-size:14px;color:var(--ink);position:relative;z-index:2}
+.flowers{position:absolute;inset:0;z-index:1;pointer-events:none}
+.flower{position:absolute;left:var(--x);top:var(--y);width:var(--s);height:var(--s);transform:translate(-50%,-50%) scale(0) rotate(var(--r))}
+#welcome.show .flower{animation:bloom 1.6s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d)}
+@keyframes bloom{
+  0%{transform:translate(-50%,-50%) scale(0) rotate(calc(var(--r) - 40deg));opacity:0}
+  60%{opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1) rotate(var(--r));opacity:1}
+}
+.flower .petal{position:absolute;left:50%;top:50%;width:46%;height:46%;margin:-23% 0 0 -23%;background:var(--c);border-radius:50% 50% 50% 0;transform-origin:50% 85%;opacity:.95}
+.flower .petal:nth-child(1){transform:rotate(0deg) translateY(-38%)}
+.flower .petal:nth-child(2){transform:rotate(72deg) translateY(-38%)}
+.flower .petal:nth-child(3){transform:rotate(144deg) translateY(-38%)}
+.flower .petal:nth-child(4){transform:rotate(216deg) translateY(-38%)}
+.flower .petal:nth-child(5){transform:rotate(288deg) translateY(-38%)}
+.flower .center{position:absolute;left:50%;top:50%;width:28%;height:28%;margin:-14% 0 0 -14%;background:#ffd9a8;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.35) inset}
+
+/* temblor tipo OMORI: solo cuadro y esquinas */
+@keyframes omori-box{
+  0%{transform:translate(0,0) rotate(0deg)}
+  10%{transform:translate(1.2px,-.8px) rotate(.25deg)}
+  20%{transform:translate(-1px,.9px) rotate(-.2deg)}
+  30%{transform:translate(.8px,.6px) rotate(.2deg)}
+  40%{transform:translate(-1.2px,-.7px) rotate(-.25deg)}
+  50%{transform:translate(1px,.8px) rotate(.2deg)}
+  60%{transform:translate(-.8px,-.9px) rotate(-.2deg)}
+  70%{transform:translate(1.1px,.5px) rotate(.25deg)}
+  80%{transform:translate(-.9px,.7px) rotate(-.15deg)}
+  90%{transform:translate(.7px,-1px) rotate(.2deg)}
+  100%{transform:translate(0,0) rotate(0deg)}
+}
+.frame{}
+.corner{animation:omori-box 2.4s steps(2,end) infinite;will-change:transform}
+.corner.c2{animation-delay:-.6s}
+.corner.c3{animation-delay:-1.2s}
+.corner.c4{animation-delay:-1.8s}
+</style>
+</head>
+<body>
+<!-- Fondo personalizado: pon tu imagen en imagenes/fondo.jpg, fondo.png o fondo.jpeg -->
+<div class="bg-custom"><img src="imagenes/fondo.jpg" alt="" onerror="if(/\.jpg$/i.test(this.src))this.src=this.src.replace(/\.jpg$/i,'.png');else if(/\.png$/i.test(this.src))this.src=this.src.replace(/\.png$/i,'.jpeg');else{this.onerror=null;this.parentNode.style.background='var(--bg)';this.style.display='none'}"></div>
+<main class="screen" id="screen">
+  <!-- Imagen larga superior (entre borde del teléfono y el cuadro): pon tu archivo en imagenes/arriba.jpg o .png -->
+  <div class="banner top"><img src="imagenes/arriba.jpg" alt="Imagen superior" onerror="if(/\.jpg$/i.test(this.src))this.src=this.src.replace(/\.jpg$/i,'.png');else if(/\.png$/i.test(this.src))this.src=this.src.replace(/\.png$/i,'.jpeg');else{this.onerror=null;this.style.display='none'}"></div>
+
+  <div class="middle">
+    <section class="frame" id="frame">
+      <!-- Espacios en las esquinas dentro del cuadro de la contraseña (sin marco): pon tus archivos en imagenes/ (.jpg/.png) -->
+      <div class="corner c1"><img src="imagenes/esquina1.jpg" alt="Esquina 1" onerror="if(/\.jpg$/i.test(this.src))this.src=this.src.replace(/\.jpg$/i,'.png');else if(/\.png$/i.test(this.src))this.src=this.src.replace(/\.png$/i,'.jpeg');else{this.onerror=null;this.style.display='none'}"></div>
+      <div class="corner c2"><img src="imagenes/esquina2.jpg" alt="Esquina 2" onerror="if(/\.jpg$/i.test(this.src))this.src=this.src.replace(/\.jpg$/i,'.png');else if(/\.png$/i.test(this.src))this.src=this.src.replace(/\.png$/i,'.jpeg');else{this.onerror=null;this.style.display='none'}"></div>
+      <div class="corner c3"><img src="imagenes/esquina3.jpg" alt="Esquina 3" onerror="if(/\.jpg$/i.test(this.src))this.src=this.src.replace(/\.jpg$/i,'.png');else if(/\.png$/i.test(this.src))this.src=this.src.replace(/\.png$/i,'.jpeg');else{this.onerror=null;this.style.display='none'}"></div>
+      <div class="corner c4"><img src="imagenes/esquina4.jpg" alt="Esquina 4" onerror="if(/\.jpg$/i.test(this.src))this.src=this.src.replace(/\.jpg$/i,'.png');else if(/\.png$/i.test(this.src))this.src=this.src.replace(/\.png$/i,'.jpeg');else{this.onerror=null;this.style.display='none'}"></div>
+      <div class="panel">
+        <div class="heart">♡</div>
+        <h1>Un pequeño<br><em>secreto</em></h1>
+        <p class="sub">Escribe la clave para entrar</p>
+        <div class="dots" id="dots"></div>
+        <div class="pad" id="pad"></div>
+        <div class="msg" id="msg"></div>
+        <div class="foot">hecho con amor ✦</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Imagen larga inferior (entre el cuadro y el borde del teléfono): pon tu archivo en imagenes/abajo.jpg o .png -->
+  <div class="banner bottom"><img src="imagenes/abajo.jpg" alt="Imagen inferior" onerror="if(/\.jpg$/i.test(this.src))this.src=this.src.replace(/\.jpg$/i,'.png');else if(/\.png$/i.test(this.src))this.src=this.src.replace(/\.png$/i,'.jpeg');else{this.onerror=null;this.style.display='none'}"></div>
+  <div class="love-note">Por siempre y para siempre</div>
+</main>
+
+<div id="welcome">
+  <div class="flowers" id="flowers" aria-hidden="true"></div>
+  <h2>Bienvenida<br><em>mi amor</em></h2>
+  <p>♡</p>
+</div>
+
+<script>
+(function(){
+  var CODE='020626', LEN=CODE.length, val='';
+  var dots=document.getElementById('dots'), pad=document.getElementById('pad'), msg=document.getElementById('msg');
+  for(var i=0;i<LEN;i++){var d=document.createElement('span');d.className='dot';dots.appendChild(d);}
+  var keys=['1','2','3','4','5','6','7','8','9','','0','⌫'];
+  keys.forEach(function(k){
+    var b=document.createElement('button');b.type='button';b.className='key'+(k===''||k==='⌫'?' ghost':'');b.textContent=k;
+    if(k==='')b.disabled=true;
+    else b.onclick=function(){press(k)};
+    pad.appendChild(b);
+  });
+  function render(){[].forEach.call(dots.children,function(d,i){d.classList.toggle('on',i<val.length)})}
+  function press(k){
+    if(k==='⌫'){val=val.slice(0,-1);msg.textContent='';render();return}
+    if(val.length>=LEN)return;
+    val+=k;render();
+    if(val.length===LEN)setTimeout(check,180);
+  }
+  function bloomFlowers(){
+    var box=document.getElementById('flowers');
+    if(!box || box.children.length) return;
+    var colors=['#f4a9bc','#f7bfd0','#e88ca6','#f9d1dd','#f2b3c6','#fbc4d4'];
+    for(var i=0;i<28;i++){
+      var f=document.createElement('div'); f.className='flower';
+      var s=18+Math.random()*34;
+      f.style.setProperty('--x',(Math.random()*100)+'%');
+      f.style.setProperty('--y',(Math.random()*100)+'%');
+      f.style.setProperty('--s',s+'px');
+      f.style.setProperty('--r',(Math.random()*60-30)+'deg');
+      f.style.setProperty('--d',(0.6+Math.random()*1.4)+'s');
+      f.style.setProperty('--c',colors[i%colors.length]);
+      f.innerHTML='<span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="center"></span>';
+      box.appendChild(f);
+    }
+  }
+  function check(){
+    if(val===CODE){
+      msg.textContent='✦ correcto ✦';
+      bloomFlowers();
+      document.getElementById('screen').classList.add('open');
+      document.getElementById('welcome').classList.add('show');
+      try{sessionStorage.setItem('ok','1')}catch(e){}
+      // aquí luego: window.location.href='home.html';
+    }else{
+      dots.classList.add('err');msg.textContent='Esa no es… inténtalo de nuevo ♡';
+      setTimeout(function(){dots.classList.remove('err');val='';render()},550);
+    }
+  }
+  document.addEventListener('keydown',function(e){
+    if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==='Backspace')press('⌫');
+  });
+})();
+</script>
+</body>
+</html>
