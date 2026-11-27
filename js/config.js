@@ -1,0 +1,37 @@
+/* Aquí cambias lo importante sin tocar lo demás */
+const CONFIG={
+  startDate:"2026-06-02",
+  birthDates:{jair:"2009-01-18",nicole:"2009-01-21"},
+  songTitle:"Nuestra canción",
+  songArtist:"La que me hace pensar en ti",
+  songUrl:"",
+  lyricsOffset:0.8,
+  lyrics:[
+    {t: 33.71, text: "사람 사이 사람", es: "Entre personas, entre personas"},
+    {t: 37.68, text: "바람 사이 바람", es: "Entre vientos, entre vientos"},
+    {t: 41.53, text: "각자의 염원이 바래고", es: "Nuestros deseos se entrelazan"},
+    {t: 51.22, text: "덧칠되어", es: "Y se vuelven más fuertes"},
+    {t: 56.93, text: "Ooh 발이 닿을 만큼 굳어지면", es: "Oh, cuando se endurece lo suficiente para tocar con los pies"},
+    {t: 71.50, text: "Ah-oh 비로소 내 세상이 되어줘", es: "Ah-oh, finalmente se convierte en mi mundo"},
+    {t: 87.01, text: "Ah-oh (Ah-oh)", es: "Ah-oh (ah-oh)"},
+    {t: 95.70, text: "나의 작은 마음도", es: "Mi pequeño corazón"},
+    {t: 103.00, text: "그 안에 자란 나음도", es: "Mi yo que creció dentro de él"},
+    {t: 110.75, text: "부서지고 굳어지고", es: "Se rompe, se endurece"},
+    {t: 118.48, text: "녹아내리고 나면", es: "Se derrite y se desvanece"},
+    {t: 125.51, text: "그제서야 보이는 나의 영원", es: "Y finalmente veo mi eternidad"},
+    {t: 165.32, text: "사람 사이 사랑", es: "Amor entre personas"},
+    {t: 169.29, text: "모두 함께 모여서 Oh-oh-oh-oh", es: "Todos juntos, oh-oh-oh-oh"},
+    {t: 179.91, text: "(Ah-oh) 영원을 바라고", es: "(Ah-oh) Esperando la eternidad"},
+    {t: 184.78, text: "몸 마음 묻어내면", es: "Cuando cuerpo y mente se sumergen"},
+    {t: 191.56, text: "Oh-oh-oh, oh-oh", es: "Oh-oh-oh, oh-oh"},
+    {t: 200.25, text: "비로소 우리의 세상이 완벽해 Oh-oh", es: "Finalmente, nuestro mundo se vuelve perfecto, oh-oh"},
+    {t: 219.50, text: "사랑으로", es: "Con amor"},
+    {t: 223.37, text: "사랑으로", es: "Con amor"},
+    {t: 227.36, text: "나의 작은 마음도", es: "Mi pequeño corazón"},
+    {t: 234.59, text: "그 안에 작은 파도처럼", es: "Como pequeñas olas dentro de él"},
+    {t: 242.35, text: "부서지고 밀려와선", es: "Se rompen y se acercan a ti"},
+    {t: 250.34, text: "네게 녹아내리고", es: "Se derriten y se desvanecen"},
+    {t: 257.10, text: "그제서야 보이는 나의 영원", es: "Y finalmente veo mi eternidad"}
+  ],
+  whatsapp:{phone:"51935387061",text:"Hola mi amor, debo admitir que tú me amas mas de lo que yo te amo :/..."}
+};

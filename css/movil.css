@@ -1,0 +1,58 @@
+/* Ajustes para celular + fondo de puntitos. Cárgalo AL FINAL de los demás CSS. */
+:root{--dot:#00000026;--dot-size:20px}
+
+/* Puntitos: cambia --dot para más o menos intensidad (ej. #00000040 más fuerte) */
+#ambient{background:radial-gradient(circle,var(--dot) 1.5px,transparent 1.9px) 0 0/var(--dot-size) var(--dot-size),linear-gradient(180deg,var(--ambient-from,#f7f1e7),var(--ambient-to,#f7f1e7))}
+.page{background-image:radial-gradient(circle,var(--dot) 1.5px,transparent 1.9px),linear-gradient(var(--surface,#f7f1e7),var(--surface,#f7f1e7));background-size:var(--dot-size) var(--dot-size),100% 100%}
+.final-page{background-image:radial-gradient(circle,var(--dot) 1.5px,transparent 1.9px),radial-gradient(ellipse at 12% 9%,#fff9 0 10%,transparent 42%),linear-gradient(var(--surface),var(--surface));background-size:var(--dot-size) var(--dot-size),100% 100%,100% 100%}
+.love,.moon{--dot:#ffffff1c}
+.screen{background-image:radial-gradient(circle,#ffffff14 1.5px,transparent 1.9px);background-size:var(--dot-size) var(--dot-size)}
+
+/* Comportamiento de app en el teléfono */
+html{-webkit-text-size-adjust:100%;overscroll-behavior-y:none}
+body{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input{-webkit-user-select:text;user-select:text}
+.screen{overflow-y:auto;min-height:100dvh}
+
+/* Zonas seguras (notch y barra de gestos) */
+#main{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.cover{padding-top:calc(46px + env(safe-area-inset-top,0px))}
+#anniversary-footer{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+
+/* Botones y textos cómodos para el dedo */
+.text-btn,.skip-video{min-height:44px;padding:0 14px}
+.track-play{width:46px;height:46px}
+.video-close,.note-close{width:44px;height:44px}
+.moment small{font-size:.74rem}
+.env-label small{font-size:.68rem}
+.eyebrow{font-size:.72rem}
+
+/* Pantallas angostas */
+@media(max-width:380px){
+  .page{padding-left:16px;padding-right:16px}
+  .track-card{grid-template-columns:92px minmax(0,1fr);gap:12px}
+  .track-cover{width:92px;height:112px}
+  .moments-list{gap:6px}
+  .moment{padding:10px 6px}
+  .anniversary-card{gap:12px;padding:14px}
+  .anniversary-number{width:68px;height:68px}
+  .love-photo{height:auto}
+  .moon-pair{transform-origin:center;scale:.9}
+}
+
+/* En pantallas táctiles no hay "hover": evita que se queden pegados */
+@media(hover:none){
+  .track-card:hover,.anniversary-card:hover,.final-letter:hover,.moment:hover,.final-photo:hover,.video-card:hover,.bonus-btn:hover,.primary-btn:hover,.whatsapp-link:hover,.cover-photo.has:hover,.letter-photo.has:hover{transform:none}
+  .cover-pair .photo-slot:hover{transform:rotate(-3deg)}
+  .cover-pair .photo-slot:last-child:hover{transform:rotate(2.5deg) translateY(8px)}
+  .env:hover{transform:rotate(var(--r))}
+}
+
+/* Orden y respiro */
+.page{padding-bottom:50px}
+.apology{padding-bottom:50px}
+.video-page{min-height:0;justify-content:flex-start;padding-top:40px}
+.moon>*:not(.star){position:relative;z-index:1}
+.moon>.moon-pair{position:relative}
+.star{z-index:0}
+.letters-count{margin-bottom:6px}

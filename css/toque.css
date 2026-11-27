@@ -1,0 +1,15 @@
+#toque-btn{position:fixed;left:14px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;align-items:center;gap:7px;min-height:46px;padding:10px 18px;border:1px solid #ffffffb0;border-radius:999px;background:#fff;color:#8a5155;font-weight:700;font-size:.85rem;box-shadow:0 8px 22px #3a24282e;cursor:pointer;transition:transform .25s var(--bounce),box-shadow .25s,opacity .3s}
+#toque-btn span{color:var(--rose);font-size:1.1rem;animation:heartPulse 2s ease-in-out infinite}
+#toque-btn:hover{transform:translateY(-3px);box-shadow:0 14px 28px #3a242838}
+#toque-btn:active{transform:scale(.92)}
+#toque-btn:disabled{opacity:.6;cursor:default;transform:none}
+#toque-btn:disabled span{animation:none}
+#toque-toast{position:fixed;left:50%;bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:32;max-width:min(300px,calc(100vw - 28px));margin:0;padding:10px 16px;border-radius:14px;background:#303a32;color:#fff;font-size:.82rem;line-height:1.45;text-align:center;box-shadow:0 6px 20px #0003;opacity:0;pointer-events:none;transform:translate(-50%,8px);transition:opacity .25s,transform .25s}
+#toque-toast.show{opacity:1;transform:translate(-50%,0)}
+.who-dialog{width:min(88vw,320px);padding:26px 22px;border:1px solid #fff;border-radius:24px;background:#f7f1e7;color:var(--ink);text-align:center;box-shadow:0 24px 70px #0006;animation:cardIn .6s var(--spring)}
+.who-dialog::backdrop{background:#111b;backdrop-filter:blur(5px)}
+.who-dialog h3{margin:0 0 6px;font:600 1.5rem "Playfair Display",serif}
+.who-dialog p{margin:0 0 18px;color:var(--muted);font-size:.85rem;line-height:1.5}
+.who-dialog div{display:grid;gap:10px}
+.who-dialog button{min-height:46px;border:0;border-radius:999px;background:#424c3d;color:#fff;font-weight:700;cursor:pointer;transition:transform .2s var(--bounce)}
+.who-dialog button:active{transform:scale(.95)}

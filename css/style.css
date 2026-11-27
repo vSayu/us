@@ -1,0 +1,323 @@
+:root{color-scheme:light;--ink:#30342f;--muted:#75766e;--olive:#78845b;--paper:#f7f1e7;--rose:#c98283;--line:#e6ded0;--spring:cubic-bezier(.22,1.15,.36,1);--bounce:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.2,.7,.2,1)}
+*{box-sizing:border-box}
+html{min-width:320px;background:#282c29;scroll-behavior:smooth}
+body{min-height:100vh;margin:0;overflow-x:hidden;color:var(--ink);font-family:"DM Sans",sans-serif;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+button,input{font:inherit}
+button{touch-action:manipulation}
+#ambient{position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,var(--ambient-from,#f7f1e7),var(--ambient-to,#f7f1e7))}
+#progress{position:fixed;top:0;left:0;z-index:80;width:100%;height:3px;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,#c98283,#e4d5a5,#78845b)}
+
+/* ——— Pantalla de entrada y carga ——— */
+.screen{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:24px;background:#282c29}
+.text-btn,.skip-video{border:0;background:none;color:var(--olive);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.text-btn{margin-top:13px;font-size:.82rem}
+.skip-video{display:block;margin:14px auto 0;font-size:.8rem;transition:opacity .2s}
+.skip-video:hover{opacity:.7}
+.gift-card{width:min(100%,320px);color:#fff;text-align:center}
+.gift-icon{display:grid;width:150px;height:150px;margin:0 auto 24px;place-items:center;border:1px solid #ffffff6b;border-radius:38px;background:#78845b;font-size:3.7rem;animation:gift-open 1.2s ease-in-out infinite alternate}
+.gift-progress{height:5px;margin:0 auto 12px;overflow:hidden;border-radius:5px;background:#ffffff30}
+.gift-progress span{display:block;width:0;height:100%;background:#e4d5a5;transition:width .2s}
+.gift-card p{margin:0;color:#e3e7dd;font-size:.9rem}
+
+/* ——— Botones ——— */
+.primary-btn,.bonus-btn,.whatsapp-link{position:relative;overflow:hidden}
+.primary-btn{min-height:48px;padding:12px 21px;border:0;border-radius:999px;background:#424c3d;color:#fff;font-weight:700;cursor:pointer;transition:transform .2s var(--bounce),box-shadow .25s var(--ease),background .25s}
+.primary-btn:hover{background:#4d5946;box-shadow:0 12px 26px #424c3d33;transform:translateY(-2px)}
+.primary-btn:active,.video-card:active,.bonus-btn:active{transform:scale(.94)}
+.primary-btn::after,.bonus-btn::after,.whatsapp-link::after{content:"";position:absolute;top:0;left:-70%;width:45%;height:100%;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,#ffffff55,transparent);animation:shine 4.5s ease-in-out infinite;pointer-events:none}
+#music{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:30;display:none;width:44px;height:44px;border:1px solid #ffffffa6;border-radius:50%;background:#fff;color:var(--olive);font-size:1.2rem;box-shadow:0 5px 16px #2222;cursor:pointer}
+#music.active{display:block}
+#music-status{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:32;max-width:min(260px,calc(100vw - 28px));transform:translateY(6px);padding:10px 13px;border-radius:13px;background:#303a32;color:#fff;font-size:.76rem;line-height:1.45;box-shadow:0 6px 20px #0003;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+#music-status.visible{transform:none;opacity:1}
+
+/* ——— Páginas ——— */
+#main{padding:0 0 10px}
+.page{position:relative;width:min(100%,500px);min-height:440px;margin:0 auto 16px;padding:30px 22px 34px;overflow:hidden;border-radius:0 0 30px 30px;background-color:var(--surface,#f7f1e7);background-image:linear-gradient(180deg,var(--surface,#f7f1e7) 0%,var(--surface,#f7f1e7) calc(100% - 120px),var(--next-surface,var(--surface,#f7f1e7)) 100%)}
+.page:not(.final-page)::after{content:"♡";position:absolute;bottom:9px;left:50%;color:var(--rose);font-size:1.1rem;opacity:.55;transform:translateX(-50%);animation:dividerBeat 3s ease-in-out infinite;pointer-events:none}
+.section-heading{margin:9px 0 17px;font:600 clamp(1.8rem,8vw,2.4rem)/1.16 "Playfair Display",serif}
+.section-heading::after{content:"";display:block;width:0;height:2px;margin:13px auto 0;border-radius:2px;background:var(--rose);transition:width 1.2s var(--spring) .5s}
+.is-visible .section-heading::after{width:56px}
+.love .section-heading::after{background:#d4c896}
+.section-copy{margin:0;color:#484c44;font-size:.97rem;line-height:1.8}
+.section-copy p{margin:0 0 16px}
+.section-copy p:last-child{margin-bottom:0}
+.favorite .eyebrow,.letter .eyebrow,.apology .eyebrow,.soundtrack .eyebrow,.love .eyebrow,.video-page .eyebrow,.final-page .eyebrow{display:block;text-align:center}
+.favorite .section-heading,.letter .section-heading,.apology .section-heading,.soundtrack .section-heading,.love .section-heading{text-align:center}
+
+/* Fotos */
+.photo-slot{position:relative;display:grid;min-width:0;place-items:center;overflow:hidden;border:1px dashed #b6b09f;border-radius:19px;background:#e8e5db;color:#77776c;text-align:center}
+.photo-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:photoIn .8s var(--spring)}
+.photo-slot.has{border-style:solid;border-color:#fff;box-shadow:0 9px 24px #38342620}
+.photo-slot .placeholder{padding:12px;font-size:.72rem;line-height:1.5}
+.photo-slot.has .placeholder{display:none}
+
+/* Portada */
+.cover{--surface:#f7f1e7;padding-top:46px}
+.cover-heading{text-align:center}
+.cover-heading-stickers{position:absolute;top:64px;left:22px;right:22px;height:76px;pointer-events:none}
+.cover-heading-sticker{position:absolute;top:0;width:clamp(50px,15vw,72px);height:76px;margin:0;border:0;background:transparent;box-shadow:none;animation:floaty 5s ease-in-out infinite}
+.cover-heading-sticker.left{left:0;transform:rotate(-8deg)}
+.cover-heading-sticker.right{right:0;transform:rotate(8deg);animation-delay:-2.5s}
+.cover-heading-sticker img{object-fit:contain}
+.cover h1{margin:12px 0 5px;font:600 clamp(2.8rem,13vw,4rem)/1 "Playfair Display",serif;letter-spacing:-.04em;background:linear-gradient(100deg,#30342f 35%,#c98283 50%,#30342f 65%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 7s ease-in-out infinite}
+.cover-subtitle{margin:0;color:var(--olive);font:600 1.4rem "Caveat",cursive}
+.cover-rule{width:76px;height:2px;margin:19px auto 23px;background:#c98283}
+.cover.is-visible .cover-rule{animation:ruleGrow 1s var(--spring) both}
+.cover-photo{aspect-ratio:1.55;margin-bottom:21px}
+.cover-photo.has,.letter-photo.has{transition:transform .6s var(--spring)}
+.cover-photo.has:hover,.letter-photo.has:hover{transform:scale(1.02) rotate(-.6deg)}
+.cover-note{max-width:360px;margin:0 auto;color:#55584f;font-size:.95rem;line-height:1.8;text-align:center}
+.cover-note strong{color:#30342f}
+.cover-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.cover-pair .photo-slot{aspect-ratio:1;border:6px solid #fff;border-radius:6px;transition:transform .6s var(--spring),box-shadow .4s var(--ease)}
+.cover-pair .photo-slot:first-child{transform:rotate(-3deg)}
+.cover-pair .photo-slot:last-child{transform:rotate(2.5deg) translateY(8px)}
+.cover-pair .photo-slot:hover{transform:rotate(0) scale(1.05);z-index:2;box-shadow:0 18px 36px #38342638}
+.cover-extras{display:flex;justify-content:center;gap:14px;margin-top:15px}
+.cover-extras .photo-slot,.love-stickers .photo-slot{border:0;background:transparent;box-shadow:none;animation:floaty 5s ease-in-out infinite}
+.cover-extras .photo-slot{width:62px;height:62px}
+.cover-extras .photo-slot:nth-child(2),.love-stickers .photo-slot:nth-child(2){animation-delay:-2.4s}
+.cover-extras img,.favorite-art img,.love-stickers img{object-fit:contain}
+.cover-sign{margin:20px 0 0;text-align:center;color:#8b6a61;font:600 1.45rem "Caveat",cursive}
+.cover-subtitle,.letter-sign,.final-sign{animation:sway 5.5s ease-in-out infinite}
+
+/* Favorita y carta */
+.favorite{--surface:#ecefe8}
+.favorite-art{width:min(190px,58%);height:150px;margin:20px auto 2px;border:0;background:transparent;box-shadow:none;animation:floaty 5.5s ease-in-out infinite}
+.letter{--surface:#f6eee2}
+.letter-photo{height:190px;margin:20px 0}
+.letter-bridge{margin:18px 0 20px;color:#484c44;font-size:.97rem;line-height:1.8}
+.letter-sign{margin:20px 0 0;text-align:right;color:#7a765f;font:600 1.6rem "Caveat",cursive}
+
+/* Disculpa */
+.apology{--surface:#f2eee3;padding:22px 18px 24px}
+.apology-hero{height:210px;border:0;border-radius:22px}
+.apology-sticker{position:absolute;top:186px;right:25px;width:76px;height:80px;border:5px solid #fff;border-radius:20px;background:#fff;animation:sway 5s ease-in-out infinite}
+.apology-heading{padding:34px 5px 18px;text-align:center}
+.apology-heading .section-heading{margin:8px 0 0}
+.apology-copy{position:relative;padding:22px 20px;border:1px solid #e8dfcb;border-radius:22px;background:#fffaf0;box-shadow:0 10px 28px #50473412;font:400 1.03rem/1.8 "Caveat",cursive}
+.apology-copy p{margin:0 0 18px}
+.apology-copy p:last-child{margin:0;color:#7d8b5a;font-weight:700;text-align:center}
+.apology-collage{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.apology-collage .photo-slot{height:145px;border:0;border-radius:17px}
+.apology-collage .guitar{grid-column:1/-1;height:100px;background:#e6e2d5}
+
+/* Canción */
+.soundtrack{--surface:#e9e8ef}
+.track-card,.anniversary-card,.final-letter,.moment,.final-photo{transition:transform .4s var(--spring),box-shadow .4s var(--ease)}
+.track-card:hover,.anniversary-card:hover,.final-letter:hover,.moment:hover,.final-photo:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 20px 40px #3a342326}
+.track-card{display:grid;grid-template-columns:100px minmax(0,1fr);gap:15px;align-items:center;margin-top:18px;padding:12px;border:1px solid #fff;border-radius:23px;background:#f8f6f1;box-shadow:0 12px 30px #37323c16}
+.track-cover{width:100px;height:112px;border:0;border-radius:15px;background:#d8d5df;box-shadow:none}
+.track-cover img{border-radius:15px}
+.track-meta{min-width:0}
+.track-meta .eyebrow{font-size:.58rem;letter-spacing:.16em}
+.track-title{margin:7px 0 2px;font:600 1.15rem "Playfair Display",serif}
+.track-artist{margin:0;color:#707168;font-size:.78rem;line-height:1.5}
+.track-controls{display:flex;align-items:center;gap:10px;margin-top:13px}
+.track-play{display:grid;width:40px;height:40px;flex:none;place-items:center;border:0;border-radius:50%;background:#434c3e;color:#fff;font-size:1rem;cursor:pointer;transition:transform .2s,background .2s}
+.track-play:hover{transform:scale(1.06);background:#626f53}
+.track-status{min-height:1.3em;margin:12px 0 0;color:#77776e;font-size:.75rem;line-height:1.45}
+
+/* Barra de tiempo de la canción */
+.seek{display:flex;align-items:center;gap:10px;margin:14px 2px 0}
+.seek-time{flex:none;color:#77776e;font-size:.72rem;font-variant-numeric:tabular-nums;min-width:34px;text-align:center}
+#seek-bar{flex:1;height:6px;border-radius:999px;background:linear-gradient(to right,#78845b 0%,#78845b var(--progress,0%),#d8d5df var(--progress,0%),#d8d5df 100%);accent-color:#78845b;cursor:pointer;-webkit-appearance:none;appearance:none}
+#seek-bar::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#78845b;box-shadow:0 2px 6px #0003;cursor:pointer}
+#seek-bar::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:#78845b;cursor:pointer}
+.track-link{display:inline-block;margin-top:10px;color:#586748;font-size:.78rem;font-weight:700;text-underline-offset:3px}
+.soundtrack-note{margin:10px 4px 0;padding:9px 14px;border-radius:14px;background:#fff9ed;color:#565951;font:500 1.2rem/1.5 "Caveat",cursive;text-align:center}
+
+/* Minijuego infinito */
+.mini-game{--surface:#f5e9e7;text-align:center}
+.mini-game .section-copy{max-width:360px;margin:0 auto}
+.game-start{margin-top:22px}
+.game-dialog{width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:calc(16px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));border:0;background:radial-gradient(ellipse at 50% 35%,#fff9f4,#f1e6e5 70%,#e8e8ef);color:var(--ink);}
+.game-dialog[open]{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;animation:gameDialogIn .4s var(--spring)}
+.game-dialog::backdrop{background:#25252dcc;backdrop-filter:blur(7px)}
+@keyframes gameDialogIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.game-header{display:flex;align-items:center;width:min(100%,520px);margin-bottom:2px}
+.game-header h3{margin:4px 0 0;font:600 1.45rem "Playfair Display",serif}
+.game-close{display:grid;width:44px;height:44px;margin-left:auto;place-items:center;border:1px solid #e7bfd0;border-radius:50%;background:#fff;color:#9e6480;font-size:1.6rem;cursor:pointer}
+.game-stage{position:relative;width:min(92vw,480px);height:min(72dvh,680px);min-height:300px}
+#flappy-canvas{display:block;width:100%;height:100%;border:5px solid #fff;border-radius:25px;background:#cceff0;box-shadow:0 16px 40px #54432b30;touch-action:none}
+.game-hint{margin:10px 0;color:#707168;font:500 1.05rem "Caveat",cursive}
+.game-restart{margin:4px auto 0}
+.game-score{position:absolute;top:16px;left:50%;z-index:2;transform:translateX(-50%);color:#fff;font:700 2.6rem "Playfair Display",serif;-webkit-text-stroke:1px #78845b;text-shadow:0 3px 10px #30342f66;pointer-events:none}
+
+/* Letra estilo Spotify */
+.lyrics{position:relative;display:block;height:300px;margin:14px auto 0;padding:18px 8px;overflow:hidden;text-align:center;font:600 1.5rem/1.4 "Caveat",cursive;color:#8a8a82;-webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent)}
+.lyric-line{margin:0 0 16px;opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s var(--spring)}
+.lyric-line.show{opacity:.4;transform:none}
+.lyric-line.active{opacity:1;transform:none;color:#434c3e;font-size:clamp(2rem,8vw,2.55rem);line-height:1.45}
+.lyric-ko{display:block}
+.lyric-es{display:block;margin-top:8px;font:400 1.35rem/1.45 "Caveat",cursive;letter-spacing:.2px;color:#9a9a90;opacity:.55}
+.lyric-line.active .lyric-es{opacity:.85;color:#6c7264}
+
+/* Amor */
+.love{--surface:#343a36;color:#f5f2eb}
+.love .eyebrow{color:#d4c896}
+.love .section-heading{color:#fff}
+.love .section-copy{color:#ecece4}
+.love-photo{position:relative;display:block;width:100%;max-width:100%;aspect-ratio:16/9;height:auto;margin:22px auto;border:6px solid #fff;border-radius:6px;background:#fff;overflow:hidden}
+.love-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.love-photo .placeholder{position:static}
+.love-stickers{display:flex;justify-content:space-between;margin:20px 10px 0}
+.love-stickers .photo-slot{width:84px;height:84px}
+
+/* Luna */
+.moon{--surface:#101714;min-height:520px;padding:40px 24px;color:#f1f0e9;text-align:center}
+.moon .eyebrow{color:#d8d1ad}
+.moon h2{margin:11px 0 5px;font:600 1.7rem/1.2 "Playfair Display",serif}
+.moon-date{color:#bfc3b9;font-size:.75rem;letter-spacing:.12em}
+.moon-pair{position:relative;width:250px;height:155px;margin:23px auto 15px;animation:floaty 7s ease-in-out infinite}
+.moon-disc{position:absolute;top:7px;width:135px;height:135px;border-radius:50%;background:radial-gradient(circle at 35% 32%,#fff 0,#e2e2d8 55%,#a9aca3 100%);box-shadow:0 0 32px #fff5;transition:transform 2.4s cubic-bezier(.2,.8,.2,1),opacity 1.8s}
+.moon-disc:first-child{left:0}
+.moon-disc:last-child{right:0}
+.moon-disc::after{position:absolute;top:23%;left:28%;width:18px;height:18px;border-radius:50%;background:#96998e55;box-shadow:36px 29px 0 -5px #96998e44,22px 66px 0 -3px #96998e44;content:""}
+.moon.is-visible .moon-disc:first-child{transform:translateX(42px);opacity:.2}
+.moon.is-visible .moon-disc:last-child{transform:translateX(-42px);opacity:.2}
+.moon-caption{margin:4px 0 20px;padding:8px 12px;border-radius:14px;background:#1a211dcc;color:#d9d4bf;font:500 1.3rem "Caveat",cursive}
+.moon-copy{max-width:380px;margin:0 auto;padding:12px 14px;border-radius:16px;background:#1a211dcc;color:#d9ddd5;font:400 .9rem/1.8 "Playfair Display",serif}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.2;pointer-events:none;animation:twinkle var(--t,3s) ease-in-out infinite}
+
+/* Video */
+.video-page{--surface:#f5e8ef;display:flex;min-height:calc(100svh - 16px);flex-direction:column;justify-content:center;padding:34px 22px;text-align:center}
+.video-page .eyebrow{color:#a76f87}
+.video-page .section-heading{margin:10px auto 8px}
+.video-page .section-copy{max-width:350px;margin:0 auto;color:#71616c}
+.video-card{position:relative;display:block;width:min(100%,310px);margin:45px auto 0;padding:9px;overflow:visible;border:1px solid #e8c5d3;border-radius:27px;background:linear-gradient(145deg,#fff0f5,#f4eafa 58%,#eaf2eb);box-shadow:0 14px 34px #956b8328;text-align:left;color:#5e4d58;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.video-card:hover{transform:translateY(-3px);box-shadow:0 19px 40px #956b8338}
+.video-poster{height:210px;border:0;border-radius:19px;background:#e6d9e5}
+.video-poster img{filter:brightness(.76);transition:transform .5s var(--ease)}
+.video-card:hover .video-poster img{transform:scale(1.06)}
+.video-poster::after{position:absolute;top:50%;left:50%;display:grid;width:62px;height:62px;transform:translate(-50%,-50%);place-items:center;border:1px solid #fff9;border-radius:50%;background:#fff0f5e8;color:#ae6f89;font-size:1.5rem;box-shadow:0 5px 20px #5b36532b;content:"▶"}
+.video-caption{display:block;padding:14px 10px 8px;font:700 .95rem "Playfair Display",serif;text-align:center}
+.video-caption small{display:block;margin-top:5px;color:#927588;font:500 .75rem "DM Sans",sans-serif}
+.video-camera{position:absolute;top:-47px;right:-11px;z-index:2;width:clamp(112px,34vw,154px);height:auto;transform:rotate(5deg);mix-blend-mode:darken;pointer-events:none}
+.video-card::before,.video-card::after{position:absolute;z-index:2;color:#c77d9d;pointer-events:none}
+.video-card::before{top:-13px;left:20px;content:"♡";font-size:1.5rem}
+.video-card::after{right:18px;bottom:10px;content:"✧";font-size:1.2rem}
+.video-note{margin-top:13px;color:#857281;font:500 .8rem "Caveat",cursive}
+.video-dialog{width:min(92vw,760px);max-width:none;max-height:92dvh;margin:auto;padding:16px;border:1px solid #f3cada;border-radius:27px;background:linear-gradient(145deg,#fff0f5,#f3e9f7 65%,#eaf2eb);color:#5d4d58;box-shadow:0 20px 70px #50374b66}
+.video-dialog::backdrop{background:#111c;backdrop-filter:blur(5px)}
+.video-dialog-header{display:flex;align-items:center;gap:10px;min-height:44px;margin-bottom:8px}
+.video-dialog-title{margin-right:auto;color:#795d70;font:600 1rem "Playfair Display",serif}
+.video-dialog-camera{width:86px;height:auto;transform:rotate(-4deg);mix-blend-mode:darken}
+.video-dialog form{display:flex;justify-content:flex-end}
+.video-close{width:42px;height:42px;border:1px solid #e7bfd0;border-radius:50%;background:#ffe5ef;color:#9e6480;font-size:1.6rem;cursor:pointer}
+.video-dialog video{display:block;width:100%;max-height:70dvh;margin:8px auto;border:5px solid #fff;border-radius:18px;background:#302a32;box-shadow:0 8px 22px #674b6129}
+.video-status{min-height:1.5em;margin:8px 2px 0;color:#795d70;font-size:.84rem;line-height:1.5}
+
+/* Final */
+.final-page{--surface:#f7edda;padding:30px 20px 34px;background-image:radial-gradient(ellipse at 12% 9%,#fff9 0 10%,transparent 42%),linear-gradient(180deg,var(--surface) 0%,var(--surface) calc(100% - 120px),var(--next-surface,var(--surface)) 100%)}
+.final-page .eyebrow{color:#7d8b5a}
+.final-title{margin:10px 0 8px;text-align:center;font:600 clamp(2.3rem,10vw,3.2rem)/1.05 "Playfair Display",serif}
+.final-title span{display:block;color:#7d8b5a;font-style:italic}
+.final-intro{margin:0;text-align:center;color:#55584f;font:500 1.1rem "Caveat",cursive}
+.anniversary-card{display:flex;align-items:center;gap:17px;margin:22px 0;padding:17px;border:1px solid #fff;border-radius:20px;background:#fff8ec;box-shadow:0 8px 22px #54432b12}
+.anniversary-number{display:grid;width:78px;height:78px;flex:none;place-content:center;border-radius:50%;background:#78845b;color:#fff;text-align:center;box-shadow:0 0 0 6px #78845b20}
+.anniversary-number strong{font:600 2rem/1 "Playfair Display",serif}
+.anniversary-number small{font-size:.58rem;letter-spacing:.16em}
+.anniversary-copy>span{display:block;color:#85806e;font-size:.63rem;font-weight:700;letter-spacing:.15em}
+.anniversary-copy strong{display:block;margin:4px 0;font:600 1.05rem "Playfair Display",serif}
+.anniversary-copy p{margin:0;color:#64665d;font-size:.76rem;line-height:1.5}
+.final-collage{display:grid;grid-template-columns:1.1fr .9fr;grid-template-rows:142px 110px;gap:12px;margin:20px 0}
+.final-photo{border:6px solid #fff;border-radius:4px;background:#ebe6da;box-shadow:0 8px 20px #50402b26}
+.final-photo.main{grid-row:span 2}
+.final-photo.flower img,.final-detail img{object-fit:contain;background:#f4efe5}
+.final-detail img{object-fit:cover}
+.final-letter{position:relative;padding:23px 19px;border:1px solid #fff;border-radius:18px;background:#fff9ed;box-shadow:0 8px 24px #54432b12}
+.final-letter::before{position:absolute;top:-9px;left:14%;width:74px;height:20px;transform:rotate(-5deg);background:#d9c7a6aa;content:""}
+.final-letter p{margin:0 0 15px;color:#353630;font-size:.9rem;line-height:1.8}
+.final-letter p:last-of-type{margin-bottom:0}
+.final-detail{width:72%;height:210px;margin:20px auto 0;border:6px solid #fff;border-radius:3px;box-shadow:0 8px 20px #50402b26}
+.final-sign{margin-top:14px;color:#49513d;font:600 1.8rem "Caveat",cursive;text-align:right}
+.moments-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 22px}
+.moment{padding:12px 9px;border:1px solid #e5dece;border-radius:16px;background:#fff9ed;text-align:center}
+.moment>span{display:block;margin-bottom:5px;color:#b98179;font:600 1.2rem "Caveat",cursive}
+.moment strong{display:block;font:600 .81rem "Playfair Display",serif}
+.moment small{display:block;margin-top:5px;color:#77776e;font-size:.68rem;line-height:1.45}
+.is-visible .moment{animation:cardPop .55s var(--spring)}
+.is-visible .moment:nth-child(2){animation-delay:.1s}
+.is-visible .moment:nth-child(3){animation-delay:.2s}
+.bonus-btn{display:block;width:100%;padding:14px;border:1px solid #c9c4b2;border-radius:15px;background:#f1eadb;color:#41463b;font-weight:700;cursor:pointer;transition:transform .2s var(--bounce),background .25s}
+.bonus-btn:hover{background:#e8e0cd;transform:translateY(-2px)}
+.bonus-note{margin:12px 0 0;padding:15px;border-radius:14px;background:#fffaf1;color:#57584f;font:500 1.2rem/1.5 "Caveat",cursive;text-align:center}
+.whatsapp-cta{margin-top:22px;padding:18px 15px;border:1px solid #d5dfcf;border-radius:18px;background:#edf3e9;text-align:center}
+.whatsapp-cta p{margin:0 0 10px;color:#56624d;font:600 1.05rem "Playfair Display",serif}
+.whatsapp-link{display:block;padding:13px 15px;border-radius:999px;background:#427b53;color:#fff;font-size:.85rem;font-weight:700;line-height:1.45;text-decoration:none;box-shadow:0 6px 16px #427b5328;transition:transform .2s,background .2s}
+.whatsapp-link:hover{transform:translateY(-2px);background:#356a45}
+.whatsapp-note{display:block;margin-top:9px;color:#677064;font-size:.68rem}
+#anniversary-footer{width:min(100%,500px);margin:0 auto;padding:25px 22px 42px;border-radius:20px 20px 0 0;background:linear-gradient(#1f241f66,#1f241f99),url("../img/fondo-footer.jpg") center/cover no-repeat;color:#f4f1e8;text-align:center}
+#anniversary-footer h2{margin:0 0 8px;font:600 1.45rem "Playfair Display",serif}
+#days{color:#ded3ac;font:600 2.5rem "Playfair Display",serif}
+#anniversary-footer p{margin:3px 0;color:#d3d5ce;font-size:.85rem}
+#anniversary-footer .footer-note{margin-top:19px;color:#afb2a8;font-size:.76rem}
+
+/* ——— Decoración, transición y corazones ——— */
+#decor-stickers{position:fixed;inset:0;z-index:2;overflow:hidden;pointer-events:none}
+.deco{position:absolute;width:clamp(48px,13vw,74px);height:auto;opacity:.88;filter:drop-shadow(0 5px 12px #24251e20);transform-origin:65% 80%;animation:sticker-wobble 4.8s ease-in-out infinite}
+.deco.d1{top:10%;left:-22px}.deco.d2{top:22%;right:-23px;animation-delay:-1.3s}.deco.d3{top:34%;left:-22px;animation-delay:-2.1s}.deco.d4{top:46%;right:-23px;animation-delay:-.8s}
+.deco.d5{top:58%;left:-22px;animation-delay:-2.8s}.deco.d6{top:69%;right:-23px;animation-delay:-1.7s}.deco.d7{top:78%;left:-22px;animation-delay:-3.2s}.deco.d8{top:86%;right:-14px;animation-delay:-2.4s}
+#page-transition{position:fixed;inset:0;z-index:60;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 50% 40%,#fff7ea,#f2ead9 60%,#ece2cf);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .7s var(--ease),visibility .7s var(--ease)}
+#page-transition.active{opacity:1;visibility:visible}
+#page-transition span{color:var(--rose);font-size:3.6rem;text-shadow:0 8px 30px #c9828340;animation:heartPulse 1.4s ease-in-out infinite}
+.burst-heart{position:fixed;bottom:-40px;z-index:70;color:var(--rose);opacity:0;will-change:transform,opacity;pointer-events:none}
+.float-heart{position:fixed;bottom:-30px;z-index:21;opacity:0;pointer-events:none;animation:rise linear forwards}
+.tap-heart{position:fixed;z-index:90;color:var(--rose);font-size:20px;pointer-events:none}
+
+/* ——— Aparición al hacer scroll ——— */
+.js .reveal{opacity:0;transform:translateY(36px) scale(.97);filter:blur(3px);transition:opacity .9s var(--ease),transform 1s var(--spring),filter .9s var(--ease)}
+.js .reveal.is-visible{opacity:1;transform:none;filter:none}
+.js .reveal :is(.eyebrow,.section-heading,.cover-subtitle,.final-title,h1,h2){opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .8s var(--spring)}
+.js .reveal :is(.track-card,.anniversary-card,.moments-list,.final-collage,.cover-pair,.apology-collage,.final-letter,.whatsapp-cta){opacity:0;transform:translateY(26px) scale(.97);transition:opacity .8s var(--ease),transform .9s var(--spring) .18s}
+.js .reveal :is(.cover-sign,.cover-extras,.letter-sign,.bonus-btn,.love-stickers,.video-card,.video-note,.game-start){opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .9s var(--spring) .26s}
+.js .reveal.is-visible :is(.eyebrow,.section-heading,.cover-subtitle,.final-title,h1,h2,.track-card,.anniversary-card,.moments-list,.final-collage,.cover-sign,.cover-extras,.letter-sign,.bonus-btn,.love-stickers,.video-card,.video-note,.final-letter,.whatsapp-cta,.apology-collage,.game-start){opacity:1;transform:none}
+.js .reveal.is-visible .cover-pair{opacity:1;transform:none}
+
+/* Escritura letra por letra */
+.tw-char{opacity:0;transition:opacity .05s ease}
+.writing .tw-char{opacity:1;transition-delay:calc(var(--i,0)*10ms)}
+
+/* ——— Animaciones ——— */
+@keyframes gift-open{to{transform:rotate(3deg) scale(1.04)}}
+@keyframes heartPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+@keyframes photoIn{from{opacity:0;transform:scale(1.08)}to{opacity:1;transform:scale(1)}}
+@keyframes ruleGrow{from{width:0;opacity:0}to{width:76px;opacity:1}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes cardPop{0%{opacity:0;transform:translateY(14px) scale(.9)}100%{opacity:1;transform:none}}
+@keyframes cardIn{0%{opacity:0;transform:translateY(28px) scale(.95)}100%{opacity:1;transform:none}}
+@keyframes sway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(1.5deg)}}
+@keyframes sticker-wobble{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2.5deg)}}
+@keyframes shimmer{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+@keyframes dividerBeat{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.35)}}
+@keyframes shine{0%,60%{left:-70%}100%{left:130%}}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.7)}50%{opacity:.9;transform:scale(1.5)}}
+@keyframes rise{0%{transform:translate(0,0) rotate(0);opacity:0}12%{opacity:.55}85%{opacity:.35}100%{transform:translate(var(--dx),-112vh) rotate(var(--rot));opacity:0}}
+
+@media(min-width:700px){
+  .page{margin-bottom:22px;border-radius:28px}
+  .cover{margin-top:24px}
+  .video-page{min-height:min(820px,100svh)}
+  .final-page{margin-bottom:0}
+  .final-collage{grid-template-rows:190px 140px}
+  .apology-copy{padding:26px 25px}
+}
+
+/* ——— Video: elegir Hori o Miyamura ——— */
+dialog:not([open]){display:none!important}
+.video-pick{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:40px auto 0;width:min(100%,320px)}
+.pick-card{position:relative;display:flex;flex-direction:column;align-items:center;padding:8px 8px 12px;border:2px solid #c98283;border-radius:22px;background:#fff;box-shadow:0 12px 28px #956b8320;overflow:hidden;cursor:pointer;transition:transform .35s var(--spring),box-shadow .3s}
+.pick-card:hover{transform:translateY(-4px) rotate(-1deg);box-shadow:0 18px 36px #956b8330}
+.pick-card:active{transform:scale(.95)}
+.miya-pick{border-color:#7ea6d6}
+.pick-card .photo-slot{width:100%;aspect-ratio:1;height:auto;margin-bottom:8px;border:0;border-radius:15px;background:#e6d9e5}
+.pick-card .photo-slot::after{width:44px;height:44px;font-size:1.1rem}
+.pick-label{color:#5e4d58;font:700 1rem "Playfair Display",serif}
+.video-dialog{display:flex;flex-direction:column;align-items:center;width:min(94vw,720px);padding:12px}
+.video-dialog-header{width:100%}
+.video-single{position:relative;display:flex;align-items:center;justify-content:center;width:100%;margin:6px auto 0;overflow:hidden;border-radius:20px;background:#241d27}
+.video-single video{display:block;width:100%;max-height:60dvh;object-fit:contain}
+.cell-label{position:absolute;top:12px;left:12px;padding:4px 11px;border-radius:20px;background:#0008;color:#fff;font-size:.75rem;font-weight:700;letter-spacing:.05em;pointer-events:none}
+.video-status{text-align:center}
